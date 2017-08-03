@@ -31,7 +31,6 @@
     height:57px;
     line-height: 57px;
     margin-right:27px;
-    text-align:right;
 }
 .title .nav ul li a{
     font: 14px "Microsoft YaHei";
@@ -39,6 +38,8 @@
     color:#b5b7bb;
     display: inline-block;
     line-height: 53px;
+    width:88px;
+    text-align: center;
 }
 .title .nav ul li a:hover{
     color:#ea6f6e;
@@ -185,6 +186,31 @@
 .city-info .city{
     padding-top:52px;
     text-align: center;
+    position:relative;
+}
+.city ul{
+    background-color: #e3e3e3;
+    position: absolute;
+    top:90px;
+    left:386px;
+    width:236px;
+    border:1px solid #be4e48;
+}
+.city li{
+    height: 34px;
+    line-height: 34px;
+    text-align: left;
+    padding-left: 35px;
+    list-style: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+.city li:hover{
+    background-color: #e74f4d;
+    color: #fff;
+    background-image:url(../img/city_arrow.png);
+    background-repeat: no-repeat;
+     background-position: 12px 14px;  
 }
 .city-info .city .info-selection input{
     border:0;
@@ -222,7 +248,7 @@
     font-size:14px;
 }
 .photo-wall{
-    height:607px;
+    height:457px;
     width:100%;
     padding-top:150px;
     background-color: #f7f7f7;
@@ -253,9 +279,12 @@
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
+    display: block;    
 }
 .photo-wall .photos .photo-card .card-text .atv-text{
+    margin-top:10px;
     font-size: 14px;
+    display: block;
 }
 .photo-wall .photos .photo-card .card-text .atv-sh-title{
     font-size: 22px;
@@ -276,7 +305,7 @@
     font-size: 12px;
 }
 .detail{
-    height:567px;
+    height:566px;
     width:100%;
     display: flex;
 }
@@ -285,7 +314,8 @@
     /* float:left; */
     color:white;
     text-align: center;
-    background-image: url(../img/new_world_time.png);
+    background-image: url(../img/new_world_time1.jpg);
+    background-clip: content-box;
 }
 .detail .detail-picture h2{
     margin-top: 122px;
@@ -307,7 +337,7 @@
 .detail .detail-text{
     flex:1;
     /* margin-left:850px; */
-    height:567px;
+    height:566px;
     padding-top:160px;
     position: relative;
 }
@@ -324,6 +354,9 @@
     font-size:24px;
     font-family: "宋体";
     color:#333333;
+}
+.detail .detail-text .detail-text-title > span{
+    color: #e74f4d;
 }
 .detail .detail-text .detail-text-content{
     font-size:14px;
