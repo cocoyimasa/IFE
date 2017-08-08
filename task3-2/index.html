@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .d-name {
+            margin: 0 auto;
+            width: 580px;
+            font-family: "黑体";
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            width: 586px;
+        }
+        
+        .info {
+            color: #acacac;
+            height: 22px;
+            margin-left: 82px;
+            line-height: 28px;
+            display: none;
+        }
+        
+        .content>span {
+            display: inline-block;
+            width: 58px;
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .content>input {
+            border: 1px solid #acacac;
+            /* -webkit-appearance: none;
+            appearance: none; */
+            outline: none;
+            border-radius: 5px;
+            height: 33px;
+            width: 500px;
+            margin-left: 20px;
+        }
+        
+        form button {
+            background-color: #2f79ba;
+            border: 0;
+            color: white;
+            width: 80px;
+            height: 33px;
+            border-radius: 5px;
+        }
+        
+        .submit-div {
+            margin: 0 auto;
+            width: 580px;
+            font-family: "黑体";
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div class="d-name">
+            <div class="content">
+                <span>名字</span>
+                <input type="text" name="" id="" class='input-name'>
+                <div class="info">
+                    必填，长度为4~16个字符
+                </div>
+            </div>
+        </div>
+        <div class="d-name">
+            <div class="content">
+                <span>密码</span>
+                <input type="password" name="" id="" class="input-pwd">
+                <div class="info">
+                    必填，长度为4~16个字符
+                </div>
+            </div>
+        </div>
+        <div class="d-name">
+            <div class="content">
+                <span>密码确认</span>
+                <input type="password" name="" id="" class="input-pwd-confirm">
+                <div class="info">
+                    必填，长度为4~16个字符
+                </div>
+            </div>
+        </div>
+        <div class="d-name">
+            <div class="content">
+                <span>邮箱</span>
+                <input type="text" name="" id="" class="input-email">
+                <div class="info">
+                    必填，长度为4~16个字符
+                </div>
+            </div>
+        </div>
+        <div class="d-name">
+            <div class="content">
+                <span>手机</span>
+                <input type="text" name="" id="" class="input-phone">
+                <div class="info">
+                    必填，长度为4~16个字符
+                </div>
+            </div>
+        </div>
+        <div class="submit-div">
+            <button type="button" id="submit">提交</button>
+        </div>
+    </form>
+    <script src="md5.js"></script>
+    <script>
+        var log = console.log.bind(this)
+
+        function e(selector) {
+            return document.querySelector(selector)
+        }
+
+        function isAscii(c) {
+            return c.charCodeAt(0) <= 0xff
+        }
+
+        function strLen(str) {
+            var res = 0
+            var len = str.length
+            for (var i = 0; i < len; i++) {
+                var codeVal = str.charCodeAt(i)
+                res++
+                if (codeVal >= 0xD800 && codeVal <= 0xDBFF) {
+                    res++
+                    i++
+                } else if (!isAscii(str[i])) {
+                    res++
+                }
+            }
+            return res
+        }
+
+        function changeStateByLength(elem, config) {
+            var info = elem.parentNode.querySelector('.info')
+            if (config.state == 'error') {
+                elem.style.border = '1px solid #dd0011'
+                info.style.color = '#dd0011'
+                config.len == 0 && (info.innerHTML = config.error.empty || config.error)
+                config.len > 0 && config.len < config.min_len && (info.innerHTML = config.error.short)
+                config.len > config.max_len && (info.innerHTML = config.error.long)
+                config.error.error = info.innerHTML
+            } else if (config.state == 'success') {
+                elem.style.border = '1px solid #5dbc46'
+                info.style.color = '#5dbc46'
+                info.innerHTML = config.success
+            }
+        }
+
+        function changeStateByFormat(elem, config) {
+            var info = elem.parentNode.querySelector('.info')
+            if (config.state == 'error') {
+                elem.style.border = '1px solid #dd0011'
+                info.style.color = '#dd0011'
+                info.innerHTML = config.error
+            } else if (config.state == 'success') {
+                elem.style.border = '1px solid #5dbc46'
+                info.style.color = '#5dbc46'
+                info.innerHTML = config.success
+            }
+        }
+
+        function checkName(elem, config) {
+            var val = elem.value
+            var len = strLen(val)
+            config.len = len
+            config.max_len = 16
+            config.min_len = 4
+            len >= config.min_len && len <= config.max_len ?
+                (config.state = 'success') : (config.state = 'error')
+            changeStateByLength(elem, config)
+        }
+
+        function checkPwd(elem, config) {
+            var val = elem.value
+            var len = strLen(val)
+            config.len = len
+            config.max_len = 16
+            config.min_len = 6
+            config.pwd = hex_md5(val)
+            len >= config.min_len && len <= config.max_len ?
+                (config.state = 'success') : (config.state = 'error')
+            changeStateByLength(elem, config)
+        }
+
+        function checkPwdConfirm(elem, config) {
+            var val = elem.value
+            var cfg = config['input-pwd-confirm']
+            cfg.lastPwd = config['input-pwd'].pwd
+
+            //TODO：如何监听pwd框的再次改变
+            cfg.lastPwd == hex_md5(val) ? (cfg.state = 'success') : (cfg.state = 'error')
+            changeStateByFormat(elem, cfg)
+        }
+
+        function checkEmail(elem, config) {
+            var val = elem.value;
+
+            (/^.+@.+\..+$/).test(val) ? (config.state = 'success') : (config.state = 'error')
+            changeStateByFormat(elem, config)
+        }
+
+        function checkPhone(elem, config) {
+            var val = elem.value;
+            (/^\d{11}$/).test(val) ? (config.state = 'success') : (config.state = 'error')
+            changeStateByFormat(elem, config)
+        }
+
+        function inputOnfocus(e, config) {
+            e.style.border = '1px solid #62aeec'
+            var conf = config[e.className]
+            var p = e.parentNode;
+            var info = p.querySelector('.info')
+            info.style.color = '#acacac'
+            info.innerHTML = conf.info
+            info.style.display = 'block'
+        }
+
+        function inputOnblur(e, config) {
+            // e.style.border = '1px solid #acacac'
+            // var p = e.parentNode;
+            // p.querySelector('.info').style.display = 'none'
+            e.className == 'input-name' && checkName(e, config[e.className])
+            e.className == 'input-pwd' && checkPwd(e, config[e.className])
+            e.className == 'input-pwd-confirm' && checkPwdConfirm(e, config) //传全局config，需要获取上一次输入的密码
+            e.className == 'input-email' && checkEmail(e, config[e.className])
+            e.className == 'input-phone' && checkPhone(e, config[e.className])
+
+        }
+
+        function test() {
+            //exam:𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷 这个是32bit unicode
+            var elems = [
+                e('.input-name'), e('.input-pwd'), e('.input-pwd-confirm'),
+                e('.input-email'), e('.input-phone')
+            ]
+            var config = {
+                'input-name': {
+                    info: '必填，长度为4~16个字符',
+                    error: {
+                        empty: '名称不能为空',
+                        short: '名称长度太短 应在4-16之间',
+                        long: '名称长度太长 应在4-16之间',
+                    },
+                    success: '名称格式正确',
+                    name: 'name',
+                },
+                'input-pwd': {
+                    info: '必填，长度为6~16个字符',
+                    error: {
+                        empty: '密码不能为空',
+                        short: '密码长度太短 应在6-16之间',
+                        long: '密码长度太长 应在6-16之间',
+                    },
+                    success: '密码可用',
+                    name: 'pwd',
+                },
+                'input-pwd-confirm': {
+                    info: '再次输入相同密码',
+                    error: '密码两次输入不一致',
+                    success: '密码输入一致',
+                    name: 'pwd-confirm',
+                },
+                'input-email': {
+                    info: '格式举例:someone@email.com',
+                    error: '邮箱格式错误',
+                    success: '邮箱格式正确',
+                    name: 'email',
+                },
+                'input-phone': {
+                    info: '11位手机号',
+                    error: '手机格式错误',
+                    success: '手机格式正确',
+                    name: 'phone',
+                },
+            }
+            elems.map(function(elem) {
+                elem.addEventListener('focus', function(event) {
+                    inputOnfocus(this, config)
+                }, false)
+
+                //失去焦点之后进行校验
+                //同时监听change事件
+                elem.addEventListener('blur', function(event) {
+                    inputOnblur(this, config)
+                }, false)
+                elem.addEventListener('change', function(event) {
+                    inputOnblur(event.target, config)
+                }, false)
+            })
+            e('#submit').addEventListener('click', function(event) {
+                var keys = Object.keys(config)
+                var errorStr = '输入有误:' + '\n'
+                var error = false
+                for (var i = 0; i < keys.length; i++) {
+                    var k = keys[i]
+                    if (config[k].state && config[k].state != 'success') {
+                        error = true
+                        Object.prototype.toString.call(config[k].error) == '[object String]' ?
+                            errorStr += config[k].error + '\n' :
+                            errorStr += config[k].error.error + '\n'
+                    }
+                }
+                error && alert(errorStr)
+            })
+            log(config)
+        }
+        test()
+    </script>
+</body>
+
+</html>

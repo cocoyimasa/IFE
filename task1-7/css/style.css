@@ -635,10 +635,13 @@
 .footer .footer-bottom .bottom-left{
     float:left;
     line-height: 57px;
+    padding-left:20px; 
     height:57px;
 }
 .footer .footer-bottom .bottom-right{
     float:right;
     line-height: 57px;
+    text-align: left;
+    padding-right:20px; 
     height:57px;    
 }

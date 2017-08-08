@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .d-name {
+            margin: 0 auto;
+            width: 395px;
+            height: 60px;
+            font-family: "黑体";
+            font-size: 12px;
+        }
+        
+        .content {
+            width: 395px;
+            height: 35px;
+        }
+        
+        .info {
+            height: 22px;
+            margin-left: 50px;
+            line-height: 28px;
+        }
+        
+        .content>span {
+            font-weight: bold;
+        }
+        
+        .content>input {
+            border: 1px solid #aaaaaa;
+            /* -webkit-appearance: none;
+            appearance: none; */
+            outline: none;
+            border-radius: 5px;
+            height: 33px;
+            width: 270px;
+            margin-right: 11px;
+            margin-left: 23px;
+        }
+        
+        .content>button {
+            background-color: #2f79ba;
+            border: 0;
+            color: white;
+            width: 55px;
+            height: 33px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div class="d-name">
+            <div class="content">
+                <span>名字</span>
+                <input type="text" name="" id="">
+                <!-- button在火狐chrome下会自动刷新页面，需要加上type=‘button’ -->
+                <button class="check" type="button">验证</button>
+            </div>
+            <div class="info">
+                必填，长度为4~16个字符
+            </div>
+        </div>
+    </form>
+    <script>
+        function e(selector) {
+            return document.querySelector(selector)
+        }
+
+        function isAscii(c) {
+            return c.charCodeAt(0) <= 0xff
+        }
+
+        function strLen(str) {
+            var res = 0
+            var len = str.length
+            for (var i = 0; i < len; i++) {
+                var codeVal = str.charCodeAt(i)
+                res++
+                if (codeVal >= 0xD800 && codeVal <= 0xDBFF) {
+                    res++
+                    i++
+                } else if (!isAscii(str[i])) {
+                    res++
+                }
+            }
+            return res
+        }
+
+        function changeState(elem, state) {
+            var info = e('.info')
+            if (state.name == 'error') {
+                elem.style.cssText += 'border:1px solid #dd0011;'
+                info.style.cssText += 'color:#dd0011;'
+                state.len == 0 && (info.innerHTML = '名称不能为空')
+                state.len > 0 && state.len < 4 && (info.innerHTML = '名称长度太短 应在4-16之间')
+                state.len > 16 && (info.innerHTML = '名称长度太长 应在4-16之间')
+            } else if (state.name == 'success') {
+                elem.style.cssText += 'border:1px solid #5dbc46;'
+                info.style.cssText += 'color:#5dbc46;'
+                info.innerHTML = '名称格式正确'
+            }
+        }
+
+        function checkForm(elem) {
+            //失去焦点之后进行校验
+            //可以在点击验证之后校验，也可以监听change事件
+            var val = elem.value
+            var len = strLen(val)
+            var state = {
+                len: len
+            }
+            len >= 4 && len <= 16 ? (state.name = 'success') : (state.name = 'error')
+            changeState(elem, state)
+        }
+
+        function test() {
+            //exam:𠮷𠮷𠮷𠮷𠮷𠮷𠮷𠮷 这个是32bit unicode
+            var elem = e('.d-name input')
+            elem.focus()
+            e('.check').addEventListener('click', function(event) {
+                checkForm(elem)
+            }, false)
+            elem.addEventListener('change', function(event) {
+                checkForm(elem)
+            }, false)
+        }
+        test()
+    </script>
+</body>
+
+</html>
