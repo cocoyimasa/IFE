@@ -278,24 +278,28 @@
             return this
         }
         block.go = function() {
-            switch (this.direction) {
-                case 'up':
-                    this.y -= 40
-                    break;
-                case 'left':
-                    this.x -= 41
-                    break;
-                case 'down':
-                    this.y += 40
-                    break;
-                case 'right':
-                    this.x += 41
-                    break;
+            var config = {
+                'up': {
+                    x: 0,
+                    y: -40,
+                },
+                'left': {
+                    x: -41,
+                    y: 0,
+                },
+                'down': {
+                    x: 0,
+                    y: 40,
+                },
+                'right': {
+                    x: 41,
+                    y: 0,
+                },
             }
-            this.x = this.x < 0 ? 0 : this.x
-            this.x = this.x > 369 ? 369 : this.x
-            this.y = this.y < 0 ? 0 : this.y
-            this.y = this.y > 361 ? 361 : this.y
+            this.x += config[this.direction].x
+            this.y += config[this.direction].y
+            this.x = Math.max(this.x, 0) && Math.min(369, this.x)
+            this.y = Math.max(this.y, 0) && Math.min(361, this.y)
             this.el.style.top = this.y + 'px' //注意单位
             this.el.style.left = this.x + 'px'
 
