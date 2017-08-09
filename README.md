@@ -10,3 +10,7 @@ Baidu IFE2017 &amp;&amp; do it for fun
 * [task3-1](http://cocoyimasa.github.io/IFE/task3-1/index.html)
 
 * [task3-2](http://cocoyimasa.github.io/IFE/task3-2/index.html)
+
+* [task3-3](http://cocoyimasa.github.io/IFE/task3-3/index.html)
+
+* [task3-4](http://cocoyimasa.github.io/IFE/task3-4/index.html)
