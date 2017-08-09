@@ -302,91 +302,54 @@
             //log(this.x, this.y)
             return this
         }
-        block.turnLeft = function() {
-            switch (this.direction) {
-                case 'up':
-                    this.deg -= 90
-                    this.direction = 'left'
-                    break;
-                case 'left':
-                    this.deg -= 90
-                    this.direction = 'down'
-                    break;
-                case 'down':
-                    this.deg -= 90
-                    this.direction = 'right'
-                    break;
-                case 'right':
-                    this.deg -= 90
-                    this.direction = 'up'
-                    break;
-            }
+        block.rotate = function(config) {
+            this.direction = config[this.direction]
             this.el.style.transform = 'rotate(' + this.deg + 'deg)'
+        }
+        block.turnLeft = function() {
+            var config = {
+                'up': 'left',
+                'left': 'down',
+                'down': 'right',
+                'right': 'up',
+            }
+            this.deg -= 90
+            this.rotate(config)
             return this
         }
         block.turnRight = function() {
-            switch (this.direction) {
-                case 'up':
-                    this.deg += 90
-                    this.direction = 'right'
-                    break;
-                case 'right':
-                    this.deg += 90
-                    this.direction = 'down'
-                    break;
-                case 'down':
-                    this.deg += 90
-                    this.direction = 'left'
-                    break;
-                case 'left':
-                    this.deg += 90
-                    this.direction = 'up'
-                    break;
+            var config = {
+                'up': 'right',
+                'right': 'down',
+                'down': 'left',
+                'left': 'up',
             }
-            this.el.style.transform = 'rotate(' + this.deg + 'deg)'
+            this.deg += 90
+            this.rotate(config)
             return this
         }
         block.turnBack = function() {
-            switch (this.direction) {
-                case 'up':
-                    this.deg += 180
-                    this.direction = 'down'
-                    break;
-                case 'right':
-                    this.deg += 180
-                    this.direction = 'left'
-                    break;
-                case 'down':
-                    this.deg += 180
-                    this.direction = 'up'
-                    break;
-                case 'left':
-                    this.deg += 180
-                    this.direction = 'right'
-                    break;
+            var config = {
+                'up': 'down',
+                'right': 'left',
+                'down': 'up',
+                'left': 'right',
             }
-            this.el.style.transform = 'rotate(' + this.deg + 'deg)'
+            this.deg += 180
+            this.rotate(config)
             return this
         }
         var b = block.init()
 
         e('#exec').addEventListener('click', function() {
-            var directive = e('#directive').value
-            if (directive.toLowerCase() == 'go') {
-                b = b.go()
-            } else if (directive.toLowerCase() == 'tun lef') {
-
-                //log('left')
-                b = b.turnLeft()
-            } else if (directive.toLowerCase() == 'tun rig') {
-
-                //log('right')
-                b = b.turnRight()
-            } else if (directive.toLowerCase() == 'tun bac') {
-
-                //log('back')
-                b = b.turnBack()
+            var directive = e('#directive').value.toLowerCase()
+            var config = {
+                'go': 'go',
+                'tun lef': 'turnLeft',
+                'tun rig': 'turnRight',
+                'tun bac': 'turnBack'
             }
+            b = b[config[directive]]()
         })
 
         //auto test
