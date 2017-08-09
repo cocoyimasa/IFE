@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .board {
+        width: 439px;
+        margin: 20px auto 10px;
+        overflow: hidden;
+    }
+    
+    .top-nums {
+        padding-left: 25px;
+    }
+    
+    .top-nums>span {
+        display: inline-block;
+        text-align: center;
+        width: 41px;
+    }
+    
+    .left-nums {
+        float: left;
+        width: 25px;
+    }
+    
+    .left-nums>span {
+        display: inline-block;
+        width: 25px;
+        line-height: 40px;
+        height: 40px;
+        text-align: center;
+    }
+    
+    .table-wrapper {
+        border: 1px solid #1a1a1a;
+        margin-left: 25px;
+        /* width: 413px; */
+        height: 402px;
+        position: relative;
+    }
+    
+    .s-block {
+        position: absolute;
+        top: 160px;
+        left: 205px;
+        height: 40px;
+        width: 41px;
+    }
+    
+    .blue-p {
+        width: 41px;
+        height: 10px;
+        background-color: blue;
+    }
+    
+    .red-p {
+        height: 30px;
+        width: 41px;
+        background-color: red;
+    }
+    
+    #t-table {
+        border-collapse: collapse;
+    }
+    
+    .board td {
+        border: 1px solid #e2e2e2;
+        height: 39px;
+        width: 40px;
+    }
+    
+    .directive-wrapper {
+        width: 412px;
+        height: 40px;
+        margin: 0 auto;
+        text-align: left;
+        padding-left: 27px;
+    }
+    
+    #directive {
+        border: 1px solid #acacac;
+        height: 30px;
+        width: 150px;
+        border-radius: 3px;
+    }
+    
+    #exec {
+        border: 0;
+        border-radius: 3px;
+        width: 45px;
+        height: 30px;
+        background-color: #acacac;
+        color: white;
+        font-size: 12px;
+    }
+</style>
+
+<body>
+    <div class="board">
+        <div class="top-nums"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+        <div class="left-nums">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span>6</span>
+            <span>7</span>
+            <span>8</span>
+            <span>9</span>
+            <span>10</span>
+        </div>
+        <div class="table-wrapper">
+            <table border="1" id="t-table">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="s-block">
+                <div class="blue-p"></div>
+                <div class="red-p"></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="directive-wrapper">
+        <input type="text" name="" id="directive" value="GO">
+        <button type="button" id="exec">执行</button>
+    </div>
+    <script>
+        var log = console.log.bind(console)
+
+        function e(sel) {
+            return document.querySelector(sel)
+        }
+
+        function es(sel) {
+            return document.querySelectorAll(sel)
+        }
+        var block = {
+            el: '',
+            direction: 'up',
+            x: 205,
+            y: 160,
+            deg: 0,
+        }
+        block.init = function() {
+            this.el = e('.s-block')
+            return this
+        }
+        block.go = function() {
+            switch (this.direction) {
+                case 'up':
+                    this.y -= 40
+                    break;
+                case 'left':
+                    this.x -= 41
+                    break;
+                case 'down':
+                    this.y += 40
+                    break;
+                case 'right':
+                    this.x += 41
+                    break;
+            }
+            this.x = this.x < 0 ? 0 : this.x
+            this.x = this.x > 369 ? 369 : this.x
+            this.y = this.y < 0 ? 0 : this.y
+            this.y = this.y > 361 ? 361 : this.y
+            this.el.style.top = this.y + 'px' //注意单位
+            this.el.style.left = this.x + 'px'
+
+            //log(this.x, this.y)
+            return this
+        }
+        block.turnLeft = function() {
+            switch (this.direction) {
+                case 'up':
+                    this.deg -= 90
+                    this.direction = 'left'
+                    break;
+                case 'left':
+                    this.deg -= 90
+                    this.direction = 'down'
+                    break;
+                case 'down':
+                    this.deg -= 90
+                    this.direction = 'right'
+                    break;
+                case 'right':
+                    this.deg -= 90
+                    this.direction = 'up'
+                    break;
+            }
+            this.el.style.transform = 'rotate(' + this.deg + 'deg)'
+            return this
+        }
+        block.turnRight = function() {
+            switch (this.direction) {
+                case 'up':
+                    this.deg += 90
+                    this.direction = 'right'
+                    break;
+                case 'right':
+                    this.deg += 90
+                    this.direction = 'down'
+                    break;
+                case 'down':
+                    this.deg += 90
+                    this.direction = 'left'
+                    break;
+                case 'left':
+                    this.deg += 90
+                    this.direction = 'up'
+                    break;
+            }
+            this.el.style.transform = 'rotate(' + this.deg + 'deg)'
+            return this
+        }
+        block.turnBack = function() {
+            switch (this.direction) {
+                case 'up':
+                    this.deg += 180
+                    this.direction = 'down'
+                    break;
+                case 'right':
+                    this.deg += 180
+                    this.direction = 'left'
+                    break;
+                case 'down':
+                    this.deg += 180
+                    this.direction = 'up'
+                    break;
+                case 'left':
+                    this.deg += 180
+                    this.direction = 'right'
+                    break;
+            }
+            this.el.style.transform = 'rotate(' + this.deg + 'deg)'
+            return this
+        }
+        var b = block.init()
+
+        e('#exec').addEventListener('click', function() {
+            var directive = e('#directive').value
+            if (directive.toLowerCase() == 'go') {
+                b = b.go()
+            } else if (directive.toLowerCase() == 'tun lef') {
+
+                //log('left')
+                b = b.turnLeft()
+            } else if (directive.toLowerCase() == 'tun rig') {
+
+                //log('right')
+                b = b.turnRight()
+            } else if (directive.toLowerCase() == 'tun bac') {
+
+                //log('back')
+                b = b.turnBack()
+            }
+        })
+
+        //auto test
+        // setTimeout(function() {
+        //     b.go()
+        // }, 1000)
+        // setTimeout(function() {
+        //     b.turnLeft()
+        // }, 2000)
+        // setTimeout(function() {
+        //     b.turnLeft()
+        // }, 3000)
+        // setTimeout(function() {
+        //     b.turnRight()
+        // }, 4000)
+    </script>
+</body>
+
+</html>

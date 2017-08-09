@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .form-cascade {
+        width: 590px;
+        /* height: 330px; */
+        margin: 0 auto;
+        font-family: "黑体";
+        font-size: 12px;
+    }
+    
+    .identity-wrapper,
+    .school-wrapper {
+        margin-bottom: 20px;
+    }
+    
+    .identity-wrapper>span,
+    .school-wrapper>span,
+    .company-wrapper>span {
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        text-align: right;
+        margin-right: 18px;
+    }
+    
+    .identity-wrapper {
+        padding-left: 78px;
+        overflow: hidden;
+    }
+    
+    .identity-wrapper>div {
+        float: left;
+        height: 32px;
+        width: 240px;
+    }
+    
+    #student {}
+    
+    #social {}
+    
+    .school-wrapper {
+        width: 588px;
+        height: 34px;
+        display: none;
+    }
+    
+    .s-select {
+        border: 1px solid #acacac;
+    }
+    
+    .city {
+        height: 32px;
+        width: 173px;
+        margin-right: 44px;
+    }
+    
+    .school option>ul {
+        width: 280px;
+        height: 32px;
+    }
+    
+    .school {
+        width: 280px;
+        height: 32px;
+    }
+    
+    .company-wrapper {
+        width: 588px;
+        height: 34px;
+        display: none;
+    }
+    
+    .company {
+        width: 500px;
+        height: 32px;
+    }
+</style>
+
+<body>
+    <div class="form-cascade">
+        <div class="">
+            <div class="identity-wrapper">
+                <div>
+                    <input type="radio" name="identity" value="在校生" id="student">
+                    <span>在校生</span>
+                </div>
+                <div>
+                    <input type="radio" name="identity" value="非在校生" id="social">
+                    <span>非在校生</span>
+                </div>
+            </div>
+
+            <div class="school-wrapper">
+                <span>学校</span>
+                <select name="" id="" class="s-select city">
+                    <option value="bj">北京</option>
+                    <option value="sh">上海</option>
+                    <option value="wh">武汉</option>
+                    <option value="sz">深圳</option>
+                </select>
+                <select name="" id="" class="s-select school">
+                    <option value="北京大学">北京大学</option>
+                    <option value="上海大学">上海大学</option>
+                </select>
+            </div>
+            <div class="company-wrapper">
+                <span>就业单位</span>
+                <select name="" id="" class="s-select company">
+                    <option value="A司">A司</option>
+                    <option value="B司">B司</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script>
+        function e(selector) {
+            return document.querySelector(selector)
+        }
+
+        function es(selector) {
+            return document.querySelectorAll(selector)
+        }
+
+        function main() {
+            var data = {
+                bj: ["北京大学", "清华大学", "人民大学", "师范大学"],
+                sh: ["上海大学", "复旦大学", "交通大学", "同济大学"],
+                wh: ["华中科技", "武汉大学", "中南财经", "地质大学"],
+                sz: ["深圳大学", "中山大学", "广东大学", "广州大学"]
+            }
+            es('input[name="identity"]').forEach(function(item) {
+                item.addEventListener('click', function(event) {
+                    if (event.target.id == 'student') {
+                        e('.school-wrapper').style.display = 'block'
+                        e('.company-wrapper').style.display = 'none'
+                    } else {
+                        e('.school-wrapper').style.display = 'none'
+                        e('.company-wrapper').style.display = 'block'
+                    }
+                })
+            })
+            e('.city').addEventListener('change', function(event) {
+                var target = event.target
+                var idx = target.selectedIndex //注意是要获取selectedIndex
+
+                var v = target.options[idx].value //注意拿到option集合的方法是select.options
+
+                // es('.school option').forEach(function(o) {
+                //     if (o.value.includes(v)) {
+                //         o.selected = 'selected'
+                //     }
+                // })
+                //清空学校
+
+                var school = e('.school')
+                school.options.length = 0
+                var ops = '';
+                for (var i = 0; i < data[v].length; i++) {
+                    ops += '<option>' + data[v][i] + '</option>'
+                }
+                school.innerHTML = ops
+            })
+        }
+        main()
+    </script>
+</body>
+
+</html>
