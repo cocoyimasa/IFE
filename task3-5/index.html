@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>听指令的方块(一)</title>
+    <title>听指令的方块(二)</title>
 </head>
 <style>
     * {
@@ -277,6 +277,46 @@
             this.el = e('.s-block')
             return this
         }
+
+        // rotate with animation
+        block.rotateWithAnim = function(config) {
+            var deltaDeg = config[this.direction] / 60
+            var moved = 0
+            var self = this
+            var timer = setInterval(function() {
+
+                self.deg += deltaDeg
+                moved++
+                if (moved == 60) {
+                    clearInterval(timer)
+                }
+                self.el.style.transform = 'rotate(' + self.deg + 'deg)'
+            }, 1000 / 60)
+            return this
+        }
+
+        //move with animation
+        block.moveWithAnim = function(config) {
+            var moved = 0
+            var self = this
+            var timer = setInterval(function() {
+
+                self.x += config.deltaX
+                self.y += config.deltaY
+                moved++
+                if (moved == 60) {
+                    clearInterval(timer)
+                }
+                self.el.style.top = self.y + 'px'
+                self.el.style.left = self.x + 'px'
+            }, 1000 / 60)
+            this.boundaryCheck()
+            return this
+        }
+        block.boundaryCheck = function() {
+            this.x = Math.max(this.x, 0) && Math.min(369, this.x)
+            this.y = Math.max(this.y, 0) && Math.min(361, this.y)
+        }
         block.go = function() {
             var config = {
                 'up': {
@@ -298,15 +338,15 @@
             }
             this.x += config[this.direction].x
             this.y += config[this.direction].y
-            this.x = Math.max(this.x, 0) && Math.min(369, this.x)
-            this.y = Math.max(this.y, 0) && Math.min(361, this.y)
+            this.boundaryCheck()
             this.el.style.top = this.y + 'px' //注意单位
             this.el.style.left = this.x + 'px'
 
             //log(this.x, this.y)
             return this
         }
-        block.rotate = function(config) {
+        block.transform = function(config) {
+            this.deg += config.deg
             this.direction = config[this.direction]
             this.el.style.transform = 'rotate(' + this.deg + 'deg)'
         }
@@ -316,9 +356,9 @@
                 'left': 'down',
                 'down': 'right',
                 'right': 'up',
+                deg: -90,
             }
-            this.deg -= 90
-            this.rotate(config)
+            this.transform(config)
             return this
         }
         block.turnRight = function() {
@@ -327,9 +367,9 @@
                 'right': 'down',
                 'down': 'left',
                 'left': 'up',
+                deg: 90,
             }
-            this.deg += 90
-            this.rotate(config)
+            this.transform(config)
             return this
         }
         block.turnBack = function() {
@@ -338,9 +378,97 @@
                 'right': 'left',
                 'down': 'up',
                 'left': 'right',
+                deg: 180,
             }
-            this.deg += 180
-            this.rotate(config)
+            this.transform(config)
+            return this
+        }
+        block.translateLeft = function() {
+            var config = {
+                deltaX: -41 / 60,
+                deltaY: 0,
+            }
+            this.moveWithAnim(config)
+            return this
+        }
+        block.translateTop = function() {
+            var config = {
+                deltaX: 0,
+                deltaY: -40 / 60,
+            }
+            this.moveWithAnim(config)
+            return this
+        }
+        block.translateRight = function() {
+            var config = {
+                deltaX: 41 / 60,
+                deltaY: 0,
+            }
+            this.moveWithAnim(config)
+            return this
+        }
+        block.translateBottom = function() {
+            var config = {
+                deltaX: 0,
+                deltaY: 40 / 60,
+            }
+            this.moveWithAnim(config)
+            return this
+        }
+        block.moveLeft = function() {
+            var config = {
+                'up': -90,
+                'left': 0,
+                'right': 180,
+                'down': 90,
+            }
+
+            this.rotateWithAnim(config)
+            this.direction = 'left' //
+            this.go()
+            return this
+        }
+        block.moveTop = function() {
+            var config = {
+                'up': 0,
+                'left': -90,
+                'right': 90,
+                'down': 180,
+            }
+
+            this.rotateWithAnim(config)
+            this.direction = 'up' //
+            this.go()
+            return this
+        }
+        block.moveRight = function() {
+            var config = {
+                'up': 90,
+                'left': 180,
+                'right': 0,
+                'down': -90,
+            }
+
+            this.rotateWithAnim(config)
+            this.direction = 'right' //
+            this.go()
+            return this
+        }
+        block.moveBottom = function() {
+            var config = {
+                'up': 180,
+                'left': -90,
+                'right': 90,
+                'down': 0,
+            }
+
+            this.rotateWithAnim(config)
+            this.direction = 'down' //
+            this.go()
+            return this
+        }
+        block.unknown = function() {
+            log('error directive!')
             return this
         }
         var b = block.init()
@@ -351,9 +479,19 @@
                 'go': 'go',
                 'tun lef': 'turnLeft',
                 'tun rig': 'turnRight',
-                'tun bac': 'turnBack'
+                'tun bac': 'turnBack',
+                'tra lef': 'translateLeft',
+                'tra top': 'translateTop',
+                'tra rig': 'translateRight',
+                'tra bot': 'translateBottom',
+                'mov lef': 'moveLeft',
+                'mov top': 'moveTop',
+                'mov rig': 'moveRight',
+                'mov bot': 'moveBottom',
+                'unknown': 'unknown'
             }
-            b = b[config[directive]]()
+            log(config, b)
+            b = b[config[directive] || 'unknown']()
         })
 
         //auto test
