@@ -104,9 +104,22 @@
         color: white;
         font-size: 12px;
     }
+    
+    .instruction {
+        font-size: 11px;
+        font-family: "黑体";
+        width: 600px;
+        margin: 0 auto;
+    }
 </style>
 
 <body>
+    <div class="instruction">
+        All directives:
+        <p>
+            'go'-> '当前方向前进', 'tun lef'-> '左转', 'tun rig'-> '右转', 'tun bac'-> '旋转180度',<br/> 'tra lef'-> '左移', 'tra top'-> '上移', 'tra rig'-> '右移', 'tra bot'-> '下移',<br/> 'mov lef'-> '左转，左移', 'mov top'-> '上转，上移', 'mov rig'-> '右转，右移', 'mov bot'-> '下转，下移',<br/>
+        </p>
+    </div>
     <div class="board">
         <div class="top-nums"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
         </div>
@@ -307,10 +320,10 @@
                 if (moved == 60) {
                     clearInterval(timer)
                 }
+                self.boundaryCheck()
                 self.el.style.top = self.y + 'px'
                 self.el.style.left = self.x + 'px'
             }, 1000 / 60)
-            this.boundaryCheck()
             return this
         }
         block.boundaryCheck = function() {
