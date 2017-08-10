@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UI组件之浮出层</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <ul class="listview">
+        <li>
+            <img src="" alt="">
+            <div>完整的网站技术参考手册</div>
+            <div>JavaScript 是世界上最流行的脚本语言。 JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。 JavaScript 被设计为向 HTML 页面增加交互性。</div>
+
+        </li>
+        <hr/>
+        <li><img src="" alt="">
+            <div>jQuery 教程</div>
+            <div>JavaScript 是世界上最流行的脚本语言。 JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。 JavaScript 被设计为向 HTML 页面增加交互性。</div>
+        </li>
+        <hr/>
+        <li><img src="" alt="">
+            <div>脚本教程</div>
+            <div>JavaScript 是世界上最流行的脚本语言。 JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。 JavaScript 被设计为向 HTML 页面增加交互性。</div>
+        </li>
+    </ul>
+    <button type="button" class="toggle-dialog">显示浮出层</button>
+    <div class="shadow"></div>
+    <div class="dialog">
+        <div class="d-title">这是一个浮出层</div>
+        <div class="d-content">
+            <div class="d-text">这是一个浮出层</div>
+            <div class="btn-group">
+                <button type="button" class="btn-cancel">取消</button>
+                <button type="button" class="btn-ok">确定</button>
+            </div>
+        </div>
+    </div>
+    <script src="dialog.js"></script>
+    <script>
+        var __main__ = function() {
+            e('.toggle-dialog').addEventListener('click', function() {
+                d.state == 'show' ? d.hide() : d.show()
+                d.state == 'show' ?
+                    (this.innerHTML = '隐藏浮出层') :
+                    (this.innerHTML = '显示浮出层')
+            }, false)
+            e('.shadow').addEventListener('click', function() {
+                d.hide()
+                e('.toggle-dialog').innerHTML = '显示浮出层'
+            }, false)
+        }
+        __main__()
+    </script>
+</body>
+
+</html>
