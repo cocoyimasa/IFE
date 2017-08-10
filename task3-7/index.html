@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UI组件之排序表格</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="table-wrapper">
+        <table border="1">
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <div class="up-triangle"></div>
+                    <div class="down-triangle"></div>
+                </td>
+                <td>
+                    <div class="up-triangle"></div>
+                    <div class="down-triangle"></div>
+                </td>
+                <td>
+                    <div class="up-triangle"></div>
+                    <div class="down-triangle"></div>
+                </td>
+                <td>
+                    <div class="up-triangle"></div>
+                    <div class="down-triangle"></div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <script src="table.js"></script>
+    <script>
+        var __main__ = function() {
+            var tbl = new SortedTable({
+                width: 425,
+                height: 120,
+                rows: 7,
+                cols: 5,
+                data: data,
+                className: '.table-wrapper',
+            }).init()
+        }
+        __main__()
+    </script>
+</body>
+
+</html>
