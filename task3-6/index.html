@@ -13,19 +13,22 @@
     <ul class="listview">
         <li>
             <img src="" alt="">
-            <div>完整的网站技术参考手册</div>
-            <div>JavaScript 是世界上最流行的脚本语言。 JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。 JavaScript 被设计为向 HTML 页面增加交互性。</div>
+            <div>实现的功能1</div>
+            <div>浮出层的中心默认在屏幕正中 当浮出层显示时，屏幕滚动时，浮出层始终保持位置固定在屏幕正中，不随屏幕滚动而变化位置。或者禁止页面在有浮出层出现时滚动 当浮出层显示时，点击浮出层以外的部分，默认为关闭浮出层。可以实现一个半透明的遮罩来挡住浮出层外的部分
+            </div>
 
         </li>
         <hr/>
         <li><img src="" alt="">
-            <div>jQuery 教程</div>
-            <div>JavaScript 是世界上最流行的脚本语言。 JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。 JavaScript 被设计为向 HTML 页面增加交互性。</div>
+            <div>实现的功能2</div>
+            <div>浮出层的样式、内容和逻辑尽量解耦 提供使用JavaScript控制浮出层展现和关闭的接口
+            </div>
         </li>
         <hr/>
         <li><img src="" alt="">
-            <div>脚本教程</div>
-            <div>JavaScript 是世界上最流行的脚本语言。 JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。 JavaScript 被设计为向 HTML 页面增加交互性。</div>
+            <div>实现的功能3</div>
+            <div>浮出层的窗口大小可以是一个默认固定值，也可以是随内容变化而自适应变化，也可以是通过接口参数进行调整，自行根据自己能力进行选择 有能力的同学可以实现浮出层的拖拽移动浮出窗口位置
+            </div>
         </li>
     </ul>
     <button type="button" class="toggle-dialog">显示浮出层</button>
@@ -42,6 +45,43 @@
     </div>
     <script src="dialog.js"></script>
     <script>
+        //utils
+        function getStyle(o, attr) {
+            return o.currentStyle ? o.currentStyle[attr] :
+                document.defaultView.getComputedStyle(o, false)[attr]
+        }
+
+        //drag for dialog
+        var drag = function(dragBar, dragEl) {
+            //谨记left,top,width,height都是字符串
+            var obj = {
+                currX: 0,
+                currY: 0,
+                drag: false,
+                left: '',
+                top: '',
+            }
+            dragBar.addEventListener('mousedown', function() {
+                obj.currX = event.clientX
+                obj.currY = event.clientY
+                obj.left = getStyle(dragEl, 'left')
+                obj.top = getStyle(dragEl, 'top')
+                obj.drag = true
+            }, false)
+            document.addEventListener('mousemove', function() {
+                if (!obj.drag) return
+                var dx = event.pageX - obj.currX
+                var dy = event.pageY - obj.currY
+                dragEl.style.top = parseInt(obj.top) + dy + 'px'
+                dragEl.style.left = parseInt(obj.left) + dx + 'px'
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+            }, false)
+            document.addEventListener('mouseup', function() {
+                obj.drag = false
+            }, false)
+        }
         var __main__ = function() {
             e('.toggle-dialog').addEventListener('click', function() {
                 d.state == 'show' ? d.hide() : d.show()
@@ -53,6 +93,7 @@
                 d.hide()
                 e('.toggle-dialog').innerHTML = '显示浮出层'
             }, false)
+            drag(e('.d-title'), d.el)
         }
         __main__()
     </script>
