@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Infinite Scroll</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="title">
+        <div class="inner">
+            Infinite Scroll
+        </div>
+    </div>
+    <div class="listview">
+        <div class="page-content infinite-scroll">
+            <div class="list-block">
+                <ul>
+                </ul>
+            </div>
+            <div class="infinite-scroll-preloader">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var log = console.log.bind(console)
+
+        function e(sel) {
+            return document.querySelector(sel)
+        }
+
+        function es(sel) {
+            return document.querySelectorAll(sel)
+        }
+
+        function getData(config, num) {
+            return new Promise(function(resolve, error) {
+                setTimeout(function() {
+                    var data = []
+                    for (var i = config.current; i < config.current + num; i++) {
+                        data.push('Item ' + i)
+                    }
+                    resolve(data)
+                }, 600)
+            })
+        }
+
+        function renderList(config) {
+            if (config.loading) return
+            config.loading = true
+            var ul = e('.list-block ul')
+            var num = config.num
+            getData(config, num).then(function(data) {
+                config.current += num
+                var fragment = document.createDocumentFragment()
+                data.forEach(function(v, k) {
+                    var li = document.createElement('li')
+                    li.className += ' item-content'
+                    li.innerHTML = v
+                    fragment.appendChild(li)
+                })
+                ul.appendChild(fragment)
+                config.loading = false
+            })
+        }
+        var __main__ = function() {
+            var config = {
+                loading: false,
+                current: 0,
+                num: 20, //加载条数
+            }
+            renderList(config)
+            window.addEventListener('scroll', function(event) {
+                var scrollHeight = document.body.scrollHeight
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+                var clientHeight = document.documentElement.clientHeight
+                var dist = scrollHeight - scrollTop - clientHeight
+
+                // log(dist, clientHeight, scrollTop, scrollHeight)
+
+                if (dist < 100) {
+                    renderList(config)
+                }
+            }, false)
+        }
+        __main__()
+    </script>
+</body>
+
+</html>
