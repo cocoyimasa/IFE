@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Music-player</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        background: transparent;
+        min-height: 500px;
+        width: 100%;
+        height: 100%;
+        color: rgba(255, 255, 255, 0.5);
+        opacity: 0.7;
+        background: #333029;
+        font-size: 12px;
+    }
+    
+    .main {
+        margin: 80px auto 0;
+        width: 894px;
+    }
+    
+    .playlist {
+        float: left;
+        width: 638px;
+    }
+    
+    .playlist ul {
+        height: 317px;
+        overflow: scroll;
+    }
+    
+    .album {
+        float: right;
+        width: 208px;
+    }
+    
+    .main::after {
+        content: " ";
+        clear: both;
+        display: block;
+        height: 0;
+    }
+    
+    li {
+        list-style: none;
+    }
+    
+    .playlist>div::after {
+        content: " ";
+        clear: both;
+        display: block;
+        height: 0;
+    }
+    
+    .playing {
+        float: left;
+    }
+    
+    .clear-all {
+        float: right;
+    }
+    
+    .playlist li {
+        height: 50px;
+        line-height: 50px;
+        border-top: 1px solid #47443d;
+        font-size: 14px;
+    }
+    
+    .star {
+        width: 5%;
+        display: inline-block;
+    }
+    
+    .song-title {
+        width: 45%;
+        display: inline-block;
+    }
+    
+    .singer {
+        width: 35%;
+        display: inline-block;
+    }
+    
+    .cover {
+        margin: 0 auto;
+        width: 150px;
+        text-align: center;
+    }
+    
+    .lyric {
+        margin: 0 auto;
+        width: 150px;
+        text-align: center;
+    }
+    
+    .progress-wrapper {
+        height: 18px;
+        position: relative;
+    }
+    
+    .progress {
+        height: 4px;
+        background-color: #191E22;
+        background-color: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        width: 545px;
+    }
+    
+    .played {
+        background-color: #908979;
+        background-color: rgba(255, 255, 255, 0.5);
+        width: 200px;
+        height: 4px;
+    }
+    
+    .circle {
+        font-size: 16px;
+        position: absolute;
+        color: white;
+        top: 0;
+        left: 0;
+        margin-top: -9px;
+        z-index: 10;
+    }
+    
+    .player {
+        margin: 80px auto 0;
+        width: 894px;
+    }
+    
+    .song-info {
+        float: left;
+        width: 638px;
+    }
+    
+    .player-controls {
+        float: right;
+        width: 208px;
+    }
+    
+    .player .wrapper {
+        float: left;
+        width: 545px;
+    }
+    
+    .head {
+        overflow: hidden;
+        _zoom: 1;
+        margin-bottom: 10px;
+    }
+    
+    .song {
+        float: left;
+        font-size: 14px;
+    }
+    
+    .left-time {
+        float: right;
+    }
+    
+    .play-mode {
+        float: right;
+        font-size: 16px;
+        text-align: center;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        height: 50px;
+    }
+    
+    .button {
+        outline: none;
+        border: 0;
+        background-color: transparent;
+        color: rgba(255, 255, 255, 0.5);
+        text-align: center;
+    }
+    
+    .fast-backward {
+        font-size: 16px;
+        margin-right: 40px;
+        color: white;
+    }
+    
+    .play-button {
+        margin-right: 35px;
+        font-size: 26px;
+        color: white;
+    }
+    
+    .fast-forward {
+        font-size: 16px;
+        color: white;
+    }
+    
+    .controls {
+        width: 150px;
+        margin: 0 auto;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div class="playlist">
+            <div>
+                <span class="playing">正在播放</span>
+                <span class="clear-all">清空全部</span>
+            </div>
+            <ul>
+                <li>
+                    <span class="star">
+                        <i class="fa fa-star-o"></i>
+                    </span>
+                    <span class="song-title">
+                                梦旅人
+                            </span>
+                    <span class="singer">
+                                小安
+                            </span>
+                    <span class="song-share">
+                                    <i class="fa fa-share-square-o"></i>
+                                </span>
+                    <span class="song-del">
+                                    <i class="fa fa-times"></i>
+                            </span>
+                </li>
+                <li>
+                    <span class="star">
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    <span class="song-title">
+                                    梦旅人
+                                </span>
+                    <span class="singer">
+                                    小安
+                                </span>
+                    <span class="song-share">
+                                        <i class="fa fa-share-square-o"></i>
+                                    </span>
+                    <span class="song-del">
+                                        <i class="fa fa-times"></i>
+                                </span>
+                </li>
+                <li>
+                    <span class="star">
+                                <i class="fa fa-star-o"></i>
+                            </span>
+                    <span class="song-title">
+                                        梦旅人
+                                    </span>
+                    <span class="singer">
+                                        小安
+                                    </span>
+                    <span class="song-share">
+                                            <i class="fa fa-share-square-o"></i>
+                                        </span>
+                    <span class="song-del">
+                                            <i class="fa fa-times"></i>
+                                    </span>
+                </li>
+                <li>
+                    <span class="star">
+                                    <i class="fa fa-star-o"></i>
+                                </span>
+                    <span class="song-title">
+                                            梦旅人
+                                        </span>
+                    <span class="singer">
+                                            小安
+                                        </span>
+                    <span class="song-share">
+                                                <i class="fa fa-share-square-o"></i>
+                                            </span>
+                    <span class="song-del">
+                                                <i class="fa fa-times"></i>
+                                        </span>
+                </li>
+                <li>
+                    <span class="star">
+                                        <i class="fa fa-star-o"></i>
+                                    </span>
+                    <span class="song-title">
+                                                梦旅人
+                                            </span>
+                    <span class="singer">
+                                                小安
+                                            </span>
+                    <span class="song-share">
+                                                    <i class="fa fa-share-square-o"></i>
+                                                </span>
+                    <span class="song-del">
+                                                    <i class="fa fa-times"></i>
+                                            </span>
+                </li>
+                <li>
+                    <span class="star">
+                                            <i class="fa fa-star-o"></i>
+                                        </span>
+                    <span class="song-title">
+                                                    梦旅人
+                                                </span>
+                    <span class="singer">
+                                                    小安
+                                                </span>
+                    <span class="song-share">
+                                                        <i class="fa fa-share-square-o"></i>
+                                                    </span>
+                    <span class="song-del">
+                                                        <i class="fa fa-times"></i>
+                                                </span>
+                </li>
+                <li>
+                    <span class="star">
+                                                <i class="fa fa-star-o"></i>
+                                            </span>
+                    <span class="song-title">
+                                                        梦旅人
+                                                    </span>
+                    <span class="singer">
+                                                        小安
+                                                    </span>
+                    <span class="song-share">
+                                                            <i class="fa fa-share-square-o"></i>
+                                                        </span>
+                    <span class="song-del">
+                                                            <i class="fa fa-times"></i>
+                                                    </span>
+                </li>
+                <li>
+                    <span class="star">
+                                                    <i class="fa fa-star-o"></i>
+                                                </span>
+                    <span class="song-title">
+                                                            梦旅人
+                                                        </span>
+                    <span class="singer">
+                                                            小安
+                                                        </span>
+                    <span class="song-share">
+                                                                <i class="fa fa-share-square-o"></i>
+                                                            </span>
+                    <span class="song-del">
+                                                                <i class="fa fa-times"></i>
+                                                        </span>
+                </li>
+                <li>
+                    <span class="star">
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                    <span class="song-title">
+                                                                梦旅人
+                                                            </span>
+                    <span class="singer">
+                                                                小安
+                                                            </span>
+                    <span class="song-share">
+                                                                    <i class="fa fa-share-square-o"></i>
+                                                                </span>
+                    <span class="song-del">
+                                                                    <i class="fa fa-times"></i>
+                                                            </span>
+                </li>
+            </ul>
+        </div>
+        <div class="album">
+            <div class="cover">
+                <img src="img/album-cover.jpg" width="150" height="150" alt="">
+            </div>
+            <div class="lyric">
+                XXXXXXXXXXXXXXXX
+            </div>
+        </div>
+    </div>
+    <div class="player">
+        <div class="song-info">
+            <div class="wrapper">
+                <div class="head">
+                    <div class="song">
+                        梦旅人
+                    </div>
+                    <div class="left-time ">
+                        -04:26
+                    </div>
+                </div>
+                <div class="progress-wrapper">
+                    <!-- 放在上边，否则progress影响绝对定位 -->
+                    <div class="circle">
+                        <i class="fa fa-circle"></i>
+                    </div>
+                    <div class="progress ">
+                        <div class="played ">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="play-mode">
+                <i class="fa fa-retweet"></i>
+                <i class="fa fa-volume-up"></i>
+            </div>
+        </div>
+        <div class="player-controls">
+            <div class="controls">
+                <button class="fast-backward button">
+                            <i class="fa fa-fast-backward"></i>
+                    </button>
+                <button class="play-button button">
+                        <i class="fa fa-play"></i>
+                </button>
+
+                <button class="fast-forward button">
+                        <i class="fa fa-fast-forward"></i>
+            </button>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
+
+</html>
