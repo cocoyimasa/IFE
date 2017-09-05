@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>鼠标悬浮模糊效果</title>
+</head>
+<style>
+    .container {
+        width: 400px;
+        height: 200px;
+        opacity: 1;
+        background-image: url(bg.jpg);
+        background-repeat: no-repeat;
+        padding-top: 19px;
+        transition: opacity 0.3s linear;
+    }
+    
+    .container:hover {
+        opacity: 0.7;
+    }
+    
+    @keyframes streamer {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: -100% 0;
+        }
+    }
+    
+    .content {
+        width: 280px;
+        height: 160px;
+        margin: 0 auto;
+        text-align: center;
+        border: 1px solid white;
+        background-image: -webkit-linear-gradient(left, blue, red 25%, blue 50%, red 75%, blue 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% 100%;
+        color: transparent;
+        animation: streamer 5s infinite linear;
+    }
+    
+    .title {
+        font-size: 22px;
+        margin-top: 40px;
+    }
+    
+    .sign-up {
+        font-size: 16px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="title">
+                欢迎参加百度前端技术学院
+            </div>
+            <div class="sign-up">
+                点击报名
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

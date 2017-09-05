@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>巨型画布</title>
+</head>
+<style>
+    .container {
+        /* margin: 0 auto; */
+    }
+    
+    #id-canvas {
+        box-sizing: border-box;
+        border: 1px solid black;
+        width: 1024px;
+        height: 768px;
+    }
+    
+    #id-canvas-preview {
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <canvas id="id-canvas" width="1024" height="768"></canvas>
+        <canvas id="id-canvas-preview" width="200" height="200"></canvas>
+    </div>
+
+    <script>
+        //utils
+        var log = console.log.bind(console)
+
+        function e(sel) {
+            return document.querySelector(sel)
+        }
+
+        function es(sel) {
+            return document.querySelectorAll(sel)
+        }
+
+        function getContext(sel) {
+            var canvas = e(sel)
+            var context = canvas.getContext('2d')
+            return context
+        }
+
+        function clearRect(ctx) {
+            ctx.clearRect(0, 0, ctx.width, ctx.height)
+        }
+
+        var obj = {
+            currX: 0,
+            currY: 0,
+            drag: false,
+            oldLeft: 0,
+            oldRight: 0,
+            left: 0,
+            top: 0,
+        }
+
+        function drawLine() {
+            var c = getContext('#id-canvas')
+            var config = {
+                x: 0,
+                y: 0,
+            }
+            window.addEventListener('mousedown', function() {
+                config.x = event.offsetX
+                config.y = event.offsetY
+            }, false)
+            window.addEventListener('mouseup', function() {
+                var newX = event.offsetX
+                var newY = event.offsetY
+                c.beginPath();
+                c.moveTo(config.x, config.y)
+                c.lineTo(newX, newY)
+                c.stroke();
+            }, false)
+        }
+
+        function loadImage() {
+            var img = new Image()
+            img.src = 'big_img.png'
+            img.onload = function() {
+                var c = getContext('#id-canvas')
+                c.width = 1024
+                c.height = 768
+
+                // c.drawImage(img, 0, 0)
+                log(c.width, c.height)
+                c.save()
+                c.strokeStyle = 'red'
+                c.lineWidth = 2
+                var w = img.width / 10
+                var h = img.height / 10
+
+                c.strokeRect(0, 0, w, h)
+                c.restore()
+            }
+
+            return img
+        }
+
+        function loadPreviewImage() {
+            var img = new Image()
+            img.src = 'big_img.png'
+            img.onload = function() {
+                var c = getContext('#id-canvas-preview')
+                var cvsElem = e('#id-canvas')
+                c.width = 200
+                c.height = 200
+
+                c.drawImage(cvsElem, 0, 0, 200, 200, 0, 0, 200, 200)
+                c.save()
+                c.strokeStyle = 'red'
+                c.lineWidth = 2
+                var w = 1024 / img.width * c.width
+                var h = 768 / img.height * c.height
+
+                //c.strokeRect(0, 0, w, h)
+                log('prev', c.width, c.height)
+
+                c.restore()
+            }
+
+            return img
+        }
+        //drag
+        var drag = function() {
+
+            window.addEventListener('mousedown', function() {
+                obj.currX = event.offsetX
+                obj.currY = event.offsetY
+                obj.oldLeft = 0
+                obj.oldRight = 0
+                obj.drag = true
+            }, false)
+            window.addEventListener('mousemove', function() {
+                if (!obj.drag) return
+                var dx = event.offsetX - obj.currX
+                var dy = event.offsetY - obj.currY
+                obj.left = 0
+                obj.top = 0
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+            }, false)
+            window.addEventListener('mouseup', function() {
+                obj.drag = false
+            }, false)
+        }
+
+        var __main__ = function() {
+            loadImage()
+            loadPreviewImage()
+
+        }
+        __main__()
+    </script>
+</body>
+
+</html>

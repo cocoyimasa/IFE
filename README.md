@@ -22,3 +22,5 @@ Baidu IFE2017 &amp;&amp; do it for fun
 * [task3-7](http://cocoyimasa.github.io/IFE/task3-7/index.html)
 
 * [task-infinite-scroll](http://cocoyimasa.github.io/IFE/task-infinite-scroll/index.html)
+
+* [task-tree](http://cocoyimasa.github.io/IFE/task-tree/index.html)

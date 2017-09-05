@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        box-sizing: border-box;
+        height: 768px;
+        width: 100%;
+    }
+    
+    .container::after {
+        content: " ";
+        clear: both;
+    }
+    
+    .left-panel {
+        box-sizing: border-box;
+        float: left;
+        border-right: 2px solid white;
+        width: 50%;
+        height: 100%;
+        background-color: #454545;
+        color: #959595;
+        padding: 10px;
+        outline: none;
+    }
+    
+    .left-panel h1,
+    .left-panel h2,
+    .left-panel h3,
+    .left-panel h4,
+    .left-panel h5 {
+        color: rgb(106, 204, 203);
+    }
+    
+    .left-panel li {
+        list-style: none;
+    }
+    
+    .left-panel li::first-letter {
+        color: rgb(73, 109, 143);
+    }
+    
+    .right-panel {
+        box-sizing: border-box;
+        float: left;
+        width: 50%;
+        background-color: white;
+        height: 100%;
+        padding: 10px;
+    }
+    
+    .right-panel blockquote {
+        background-color: #ddd;
+    }
+    
+    .code {
+        background-color: rgb(39, 40, 34);
+        padding: 10px 0 10px 10px;
+        color: #959595;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="left-panel" contenteditable="true">
+            <!-- # qqqqqq
+            <div>## qqqqqqqqq</div>
+            <div>### qqqqqqqqqqqq</div>
+            <div>#### qqqqqqqqqqqqqqq</div>
+            <div>##### qqqqqqqqqqqqqqqqqqqq</div>
+            <div>* qqqqqqqqqqqqqqqqqqqq</div>
+            <div>* qqqqqqqqqqqqqqqqqqqq</div>
+            <div>* qqqqqqqqqqqqqqqqqqqq</div>
+            <div>1. qqqqqqqqqqqqqqqqqqqq</div>
+            <div>- qqqqqqqqqqqqqqqqqqqq</div>
+            <div>- qqqqqqqqqqqqqqqqqqqq</div>
+            <div>- qqqqqqqqqqqqqqqqqqqq</div>
+            <div>> qqqqqqqqqqqqqqqqqqqq</div>
+            <div>```</div>
+            <div>function test(){}</div>
+            <div>```</div> -->
+        </div>
+        <div class="right-panel">
+        </div>
+    </div>
+    <script>
+        var log = console.log.bind(console)
+        var max = Math.max
+        var min = Math.min
+
+        function e(sel) {
+            return document.querySelector(sel)
+        }
+
+        function es(sel) {
+            return document.querySelectorAll(sel)
+        }
+
+        function parse(text) {
+            var h1 = {
+                h1: /^#.*$/,
+                pos: 1,
+            }
+            var h2 = {
+                h2: /^##.*$/,
+                pos: 2,
+            }
+            var h3 = {
+                h3: /^###.*$/,
+                pos: 3,
+            }
+            var h4 = {
+                h4: /^####.*$/,
+                pos: 4,
+            }
+            var h5 = {
+                h5: /^#####.*$/,
+                pos: 5,
+            }
+            var titles = [h5, h4, h3, h2, h1]
+            var ul = {
+                ul: /^\*.*$/,
+                pos: 2,
+            }
+            var ol = {
+                ol: /^\-.*|1\..*$/,
+                pos: 2,
+            }
+            var quote = {
+                quote: /^\>.*$/,
+                pos: 2,
+            }
+            var code = {
+                code: /^```.*$/,
+                pos: 3,
+            }
+            var State = {
+                Start: 'Start',
+                End: 'End',
+                Title: 'Title', // #
+                Ol: 'Ol', // 1. - - 
+                Ul: 'Ul', // *
+                Quote: 'Quote', // >
+                CodeBlock: 'CodeBlock', // ```
+                PlainText: 'PlainText',
+            }
+            var html = []
+            var parsed = []
+            var state = State.Start
+            var lines = text.split('\n')
+            var idx = 0
+            var len = lines.length
+            while (idx < len) {
+                var v = lines[idx]
+                switch (state) {
+                    case State.Start:
+                        {
+                            if (v[0] == '#') { //titles
+                                for (var i = 0; i < titles.length; i++) {
+                                    var expr = titles[i]
+                                    var key = Object.keys(expr)[0]
+                                    var val = expr[key]
+                                    if (val.test(v)) {
+                                        state = State.Start
+                                        var x = v.slice(expr['pos'])
+                                        parsed.push(`<div><${key}>${x}</${key}></div>`)
+                                        html.push(`<div><${key}>${v}</${key}></div>`)
+                                        idx++
+                                        break
+                                    }
+                                }
+                            } else if (ul['ul'].test(v)) { //is list?
+                                state = State.Ul
+                                var x = v.slice(ul['pos'])
+                                parsed.push('<ul>')
+                                parsed.push(`<li>${x}</li>`)
+                                html.push('<ul>')
+                                html.push(`<li>${v}</li>`)
+                                idx++
+                            } else if (ol['ol'].test(v)) { //is list?
+                                state = State.Ol
+                                var x = v.slice(ol['pos'])
+                                parsed.push('<ol>')
+                                parsed.push(`<li>${x}</li>`)
+                                html.push('<ol>')
+                                html.push(`<li>${v}</li>`)
+                                idx++
+                            } else if (quote['quote'].test(v)) { //is quote?
+                                state = State.Start
+                                var x = v.slice(quote['pos'])
+                                parsed.push(`<blockquote><p>“${x}</p></blockquote>`)
+                                html.push(`<blockquote><p>${v}</p></blockquote>`)
+                                idx++
+                            } else if (code['code'].test(v)) {
+                                state = State.CodeBlock
+                                parsed.push('<div class="code">')
+                                html.push('<div class="code">```')
+                                idx++
+                            } else { //is plaintext?
+                                state = State.PlainText
+                            }
+                        }
+                        break
+                    case State.Ul:
+                        if (ul['ul'].test(v)) {
+                            state = State.Ul
+                            var x = v.slice(ul['pos'])
+                            parsed.push(`<li>${x}</li>`)
+                            html.push(`<li>${v}</li>`)
+                            idx++
+                        } else if (ol['ol'].test(v)) {
+                            state = State.Start
+                        } else {
+                            parsed.push('</ul>')
+                            html.push('</ul>')
+                            state = State.Start
+                        }
+                        break
+                    case State.Ol:
+                        if (ol['ol'].test(v)) {
+                            state = State.Ol
+                            var x = v.slice(ol['pos'])
+                            parsed.push(`<li>${x}</li>`)
+                            html.push(`<li>${v}</li>`)
+                            idx++
+                        } else if (ul['ul'].test(v)) {
+                            state = State.Start
+                        } else {
+                            parsed.push('</ol>')
+                            html.push('</ol>')
+                            state = State.Start
+                        }
+                        break
+                    case State.CodeBlock:
+                        if (code['code'].test(v)) {
+                            state = State.Start
+                            parsed.push('</div>')
+                            html.push('```</div>')
+                            idx++
+                        } else {
+                            state = State.CodeBlock
+                            parsed.push(`<div>${v}</div>`)
+                            html.push(`<div>${v}</div>`)
+                            idx++
+                        }
+                        break
+                    case State.PlainText:
+                        parsed.push(`<div>${v}</div>`)
+                        html.push(`<div>${v}</div>`)
+                        state = State.Start
+                        idx++
+                        break
+                }
+            }
+            return [parsed.join(''), html.join('')]
+        }
+
+        function __main__() {
+            var textDiv = e('.left-panel')
+            var resultDiv = e('.right-panel')
+            textDiv.addEventListener('input', function(event) {
+
+                var text = textDiv.innerText
+
+                //log(text || '')
+                var res = parse(text)
+                resultDiv.innerHTML = res[0]
+
+                //textDiv.innerHTML = res[1]
+            })
+        }
+        __main__()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        margin-top: -50px;
+        margin-left: -50px;
+    }
+    
+    .outer-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        border: 2px solid #fe308f;
+        border-bottom: 2px solid transparent;
+        animation-name: ring;
+        animation-duration: 800ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    
+    .full-circle {
+        z-index: 0;
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        width: 0;
+        height: 0;
+        border-radius: 35px;
+        border: 35px solid #fe308f;
+        border-bottom: 35px solid #fb8bbc;
+        border-right: 35px solid #fb8bbc;
+        transform: rotate(-45deg);
+    }
+    
+    .circle-bg {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        width: 0;
+        height: 0;
+        border-radius: 35px;
+        border: 35px solid transparent;
+        transform: rotate(-45deg);
+    }
+    
+    .circle-left {
+        z-index: 1;
+        border-left: 35px solid #fb8bbc;
+        border-top: 35px solid #fb8bbc;
+        animation-name: circle-left;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+    
+    .circle-right {
+        z-index: 0;
+        border-left: 35px solid #fe308f;
+        border-top: 35px solid #fe308f;
+        animation-name: circle-right;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-delay: 0.5s;
+    }
+    
+    @keyframes ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+    
+    @keyframes circle-left {
+        from {
+            transform: rotate(-45deg);
+        }
+        25% {
+            transform: rotate(-225deg);
+        }
+        /*开始等待*/
+        50% {
+            transform: rotate(-225deg);
+        }
+        75% {
+            transform: rotate(-405deg);
+        }
+        /*开始等待*/
+        to {
+            transform: rotate(-405deg);
+        }
+    }
+    
+    @keyframes circle-right {
+        from {
+            transform: rotate(-45deg);
+            z-index: 1;
+        }
+        25% {
+            transform: rotate(-225deg);
+        }
+        /*开始等待*/
+        50% {
+            transform: rotate(-225deg);
+            z-index: 1;
+        }
+        50.001% {
+            transform: rotate(-225deg);
+            z-index: 0;
+        }
+        75% {
+            transform: rotate(-405deg);
+            z-index: 0;
+        }
+        99.999% {
+            transform: rotate(-405deg);
+            z-index: 0;
+        }
+        to {
+            transform: rotate(-405deg);
+            z-index: 1
+        }
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="loading">
+            <div class="outer-circle">
+            </div>
+            <div class="full-circle">
+            </div>
+            <div class="circle-bg circle-left">
+            </div>
+            <div class="circle-bg circle-right">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>树形控件</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<style>
+    body {
+        font-size: 12px;
+    }
+    
+    .tree {
+        width: 200px;
+        background-color: black;
+        color: white;
+        border: 1px solid #000000;
+    }
+    
+    .tree li {
+        height: 30px;
+        list-style: none;
+    }
+    
+    .hide {
+        display: none;
+    }
+    
+    .show {
+        display: block;
+    }
+</style>
+
+<body>
+    <div class="tree">
+
+    </div>
+    <script>
+        var log = console.log.bind(console)
+        var e = function(sel) {
+            return document.querySelector(sel)
+        }
+        var es = function(sel) {
+            return document.querySelectorAll(sel)
+        }
+        var nodes = [{
+            name: "父节点1",
+            children: [{
+                name: "子节点1"
+            }, {
+                name: "子节点2"
+            }]
+        }, {
+            name: "父节点2",
+            children: [{
+                name: "子节点3"
+            }, {
+                name: "子节点4",
+                children: [{
+                    name: "子节点5"
+                }]
+            }]
+        }]
+
+        var render = function(tree, nodes) {
+            var el = document.createElement('ul')
+            for (var i = 0; i < nodes.length; i++) {
+                var n = nodes[i]
+                var name = n.name || ''
+                var children = n.children || null
+                el.innerHTML += `<li><i class="fa fa-minus-square-o"></i>${name}</li>`
+                tree.appendChild(el)
+                if (children) {
+                    render(el, children)
+                }
+            }
+        }
+        var toggleStyle = function(node) {
+            if (node.classList.contains('hide')) {
+                node.classList.remove('hide')
+            } else {
+                node.classList.add('hide')
+            }
+        }
+        var toggleIcon = function(node) {
+            var icon = node.querySelector('i')
+            if (icon.classList.contains('fa-minus-square-o')) {
+                icon.classList.remove('fa-minus-square-o')
+                icon.classList.add('fa-plus-square-o')
+            } else if (icon.classList.contains('fa-plus-square-o')) {
+                icon.classList.remove('fa-plus-square-o')
+                icon.classList.add('fa-minus-square-o')
+            }
+        }
+        var stopPropagation = function(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation()
+            } else {
+                e.cancelBubble = true
+            }
+        }
+        var toggleChildren = function(target) {
+            var nextNode = target.nextSibling
+            if (nextNode && nextNode.tagName.toLowerCase() == 'ul') {
+                toggleStyle(nextNode)
+            }
+            toggleIcon(target)
+        }
+        var addEvent = function(tree) {
+            tree.addEventListener('click', function(e) {
+                var target = e.target
+                if (target.tagName.toLowerCase() == 'li') {
+                    toggleChildren(target)
+                } else if (target.tagName.toLowerCase() == 'i') {
+                    var t = target.parentNode
+                    toggleChildren(t)
+                }
+            })
+
+            //stopPropagation(e)
+        }
+        var tree = e('.tree');
+        addEvent(tree)
+        render(tree, nodes)
+    </script>
+</body>
+
+</html>
