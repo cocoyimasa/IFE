@@ -27,7 +27,7 @@
     }
     
     .main {
-        margin: 80px auto 0;
+        margin: 20px auto 0;
         width: 894px;
     }
     
@@ -53,10 +53,6 @@
         height: 0;
     }
     
-    li {
-        list-style: none;
-    }
-    
     .playlist>div::after {
         content: " ";
         clear: both;
@@ -73,10 +69,13 @@
     }
     
     .playlist li {
+        list-style: none;
         height: 50px;
         line-height: 50px;
         border-top: 1px solid #47443d;
-        font-size: 14px;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     
     .star {
@@ -98,6 +97,14 @@
         margin: 0 auto;
         width: 150px;
         text-align: center;
+    }
+    
+    .artist-name {
+        font-size: 18px;
+        text-align: center;
+        margin: 0 auto;
+        width: 150px;
+        overflow: hidden;
     }
     
     .lyric {
@@ -122,7 +129,6 @@
     .played {
         background-color: #908979;
         background-color: rgba(255, 255, 255, 0.5);
-        width: 200px;
         height: 4px;
     }
     
@@ -137,7 +143,7 @@
     }
     
     .player {
-        margin: 80px auto 0;
+        margin: 60px auto 0;
         width: 894px;
     }
     
@@ -165,19 +171,47 @@
     .song {
         float: left;
         font-size: 14px;
+        overflow: hidden;
     }
     
     .left-time {
         float: right;
     }
     
-    .play-mode {
+    .player-setting {
         float: right;
         font-size: 16px;
         text-align: center;
         padding-top: 14px;
         padding-bottom: 14px;
         height: 50px;
+        position: relative;
+    }
+    
+    .play-mode {
+        display: inline-block;
+        margin-right: 5px;
+    }
+    
+    .volume-setting {
+        display: inline-block;
+    }
+    
+    .volume {
+        position: absolute;
+        width: 50px;
+        height: 3px;
+        top: 23px;
+        left: 45px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .show {
+        display: block;
+    }
+    
+    .hide {
+        display: none;
     }
     
     .button {
@@ -209,16 +243,61 @@
         width: 150px;
         margin: 0 auto;
     }
+    
+    #music-list li>span {
+        display: inline-block;
+    }
+    
+    .search-bar {
+        margin: 30px auto 0;
+        width: 894px;
+        height: 80px;
+    }
+    
+    .search-wrapper {
+        margin: 0 auto;
+        width: 682px;
+        height: 50px;
+        line-height: 50px;
+    }
+    
+    .search-box {
+        text-indent: 1em;
+        font-size: 16px;
+        vertical-align: top;
+        outline: 0;
+        border: 0;
+        color: hsla(0, 0%, 88%, .8);
+        width: 622px;
+        height: 50px;
+        background: hsla(0, 0%, 100%, .07);
+    }
+    
+    .search-btn {
+        background: hsla(0, 0%, 100%, .07);
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+    }
+    
+    .active {
+        color: white;
+    }
 </style>
 
 <body>
+    <div class="search-bar">
+        <div class="search-wrapper">
+            <input class="search-box" type="text" name="" id="" value="请输入歌曲名"><button class="search-btn button" type="button"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
     <div class="main">
         <div class="playlist">
             <div>
                 <span class="playing">正在播放</span>
                 <span class="clear-all">清空全部</span>
             </div>
-            <ul>
+            <ul id="music-list">
                 <li>
                     <span class="star">
                         <i class="fa fa-star-o"></i>
@@ -236,150 +315,17 @@
                                     <i class="fa fa-times"></i>
                             </span>
                 </li>
-                <li>
-                    <span class="star">
-                            <i class="fa fa-star-o"></i>
-                        </span>
-                    <span class="song-title">
-                                    梦旅人
-                                </span>
-                    <span class="singer">
-                                    小安
-                                </span>
-                    <span class="song-share">
-                                        <i class="fa fa-share-square-o"></i>
-                                    </span>
-                    <span class="song-del">
-                                        <i class="fa fa-times"></i>
-                                </span>
-                </li>
-                <li>
-                    <span class="star">
-                                <i class="fa fa-star-o"></i>
-                            </span>
-                    <span class="song-title">
-                                        梦旅人
-                                    </span>
-                    <span class="singer">
-                                        小安
-                                    </span>
-                    <span class="song-share">
-                                            <i class="fa fa-share-square-o"></i>
-                                        </span>
-                    <span class="song-del">
-                                            <i class="fa fa-times"></i>
-                                    </span>
-                </li>
-                <li>
-                    <span class="star">
-                                    <i class="fa fa-star-o"></i>
-                                </span>
-                    <span class="song-title">
-                                            梦旅人
-                                        </span>
-                    <span class="singer">
-                                            小安
-                                        </span>
-                    <span class="song-share">
-                                                <i class="fa fa-share-square-o"></i>
-                                            </span>
-                    <span class="song-del">
-                                                <i class="fa fa-times"></i>
-                                        </span>
-                </li>
-                <li>
-                    <span class="star">
-                                        <i class="fa fa-star-o"></i>
-                                    </span>
-                    <span class="song-title">
-                                                梦旅人
-                                            </span>
-                    <span class="singer">
-                                                小安
-                                            </span>
-                    <span class="song-share">
-                                                    <i class="fa fa-share-square-o"></i>
-                                                </span>
-                    <span class="song-del">
-                                                    <i class="fa fa-times"></i>
-                                            </span>
-                </li>
-                <li>
-                    <span class="star">
-                                            <i class="fa fa-star-o"></i>
-                                        </span>
-                    <span class="song-title">
-                                                    梦旅人
-                                                </span>
-                    <span class="singer">
-                                                    小安
-                                                </span>
-                    <span class="song-share">
-                                                        <i class="fa fa-share-square-o"></i>
-                                                    </span>
-                    <span class="song-del">
-                                                        <i class="fa fa-times"></i>
-                                                </span>
-                </li>
-                <li>
-                    <span class="star">
-                                                <i class="fa fa-star-o"></i>
-                                            </span>
-                    <span class="song-title">
-                                                        梦旅人
-                                                    </span>
-                    <span class="singer">
-                                                        小安
-                                                    </span>
-                    <span class="song-share">
-                                                            <i class="fa fa-share-square-o"></i>
-                                                        </span>
-                    <span class="song-del">
-                                                            <i class="fa fa-times"></i>
-                                                    </span>
-                </li>
-                <li>
-                    <span class="star">
-                                                    <i class="fa fa-star-o"></i>
-                                                </span>
-                    <span class="song-title">
-                                                            梦旅人
-                                                        </span>
-                    <span class="singer">
-                                                            小安
-                                                        </span>
-                    <span class="song-share">
-                                                                <i class="fa fa-share-square-o"></i>
-                                                            </span>
-                    <span class="song-del">
-                                                                <i class="fa fa-times"></i>
-                                                        </span>
-                </li>
-                <li>
-                    <span class="star">
-                                                        <i class="fa fa-star-o"></i>
-                                                    </span>
-                    <span class="song-title">
-                                                                梦旅人
-                                                            </span>
-                    <span class="singer">
-                                                                小安
-                                                            </span>
-                    <span class="song-share">
-                                                                    <i class="fa fa-share-square-o"></i>
-                                                                </span>
-                    <span class="song-del">
-                                                                    <i class="fa fa-times"></i>
-                                                            </span>
-                </li>
             </ul>
         </div>
         <div class="album">
             <div class="cover">
                 <img src="img/album-cover.jpg" width="150" height="150" alt="">
             </div>
+            <div class="artist-name">
+
+            </div>
             <div class="lyric">
-                XXXXXXXXXXXXXXXX
+
             </div>
         </div>
     </div>
@@ -408,27 +354,219 @@
 
             </div>
 
-            <div class="play-mode">
-                <i class="fa fa-retweet"></i>
-                <i class="fa fa-volume-up"></i>
+            <div class="player-setting">
+                <div class="volume hide">
+                </div>
+                <span class="play-mode">
+                        <i class="fa fa-retweet"></i>
+                </span>
+                <span class="volume-setting">
+                        <i class="fa fa-volume-up"></i>
+                </span>
             </div>
         </div>
         <div class="player-controls">
             <div class="controls">
-                <button class="fast-backward button">
+                <button type="button" class="fast-backward button">
                             <i class="fa fa-fast-backward"></i>
                     </button>
-                <button class="play-button button">
+                <button type="button" class="play-button button">
                         <i class="fa fa-play"></i>
                 </button>
 
-                <button class="fast-forward button">
+                <button type="button" class="fast-forward button">
                         <i class="fa fa-fast-forward"></i>
             </button>
             </div>
         </div>
     </div>
+    <script src="playlist.js"></script>
     <script>
+        //utils
+        var log = console.log.bind(console)
+
+        var e = function(sel) {
+            return document.querySelector(sel)
+        }
+
+        var es = function(sel) {
+            return document.querySelectorAll(sel)
+        }
+        var toggleStatus = function(elem) {
+            if (elem.classList.contains('hide')) {
+                show(elem)
+            } else if (elem.classList.contains('show')) {
+                hide(elem)
+            }
+        }
+        var show = function(elem) {
+            elem.classList.remove('hide')
+            elem.classList.add('show')
+        }
+        var hide = function(elem) {
+            elem.classList.remove('show')
+            elem.classList.add('hide')
+        }
+
+        //music player
+        var MusicPlayer = function() {
+
+        }
+        var musicItem = e('#music-list')
+
+        //load data
+        musicItem.innerHTML = playlist.map((item, index) => {
+            return `<li data-index=${index}>
+                    <span class="star">
+                        <i class="fa fa-star-o"></i>
+                    </span>
+                    <span class="song-title" data-index=${index}>
+                            ${item.title}
+                            </span>
+                    <span class="singer" data-index=${index}>
+                            ${item.artist}
+                            </span>
+                    <span class="song-share">
+                                    <i class="fa fa-share-square-o"></i>
+                                </span>
+                    <span class="song-del">
+                                    <i class="fa fa-times"></i>
+                    </span>
+                </li>`
+        }).join('')
+
+
+        var playBtn = e('.play-button')
+        var volumeSetting = e('.volume-setting')
+        var volume = e('.volume')
+        var audio = new Audio()
+        var song = playlist[0]
+        var playing = false
+        var playlistItems = es('#music-list li')
+        var playingIndex = 0
+
+        //event binding
+        musicItem.addEventListener('click', function(event) {
+            var target = event.target
+            if (target.dataset.index) {
+                play(Number(target.dataset.index))
+            }
+        })
+
+        audio.addEventListener('timeupdate', function(event) {
+            var time = song.length - audio.currentTime
+            var sec = Math.floor(time % 60)
+            var min = Math.floor(time / 60)
+            sec = sec < 10 ? '0' + sec : sec
+            e('.left-time').innerHTML = `-${min}:${sec}`
+            var percent = Math.floor(audio.currentTime / song.length * 100) + '%'
+            e('.played').style.width = percent
+            e('.circle').style.left = percent
+        })
+        e('.search-btn').addEventListener('click', function(event) {
+            var keyword = e('.search-box').value
+            search(keyword)
+        })
+        e('.clear-all').addEventListener('click', function(event) {
+            var res = confirm("你确定清除所有歌曲吗？")
+            res == true && clearAll()
+        })
+
+        playBtn.addEventListener('click', function(event) {
+            changeIcon(playing)
+            changeState(playing)
+            playing = !playing
+        })
+        volumeSetting.addEventListener('click', function(event) {
+            toggleStatus(volume)
+        })
+        volume.addEventListener('click', function(event) {
+            setVolume(event)
+        })
+
+        //core
+        var play = function(index) {
+            if (playlistItems[playingIndex].classList.contains('active')) {
+                playlistItems[playingIndex].classList.remove('active')
+            }
+            playingIndex = index
+            var o = playlist[index]
+            song = o
+            e('.cover img').src = o.picture
+            e('.artist-name').innerHTML = o.artist
+            e('.song').innerHTML = o.title
+            audio.src = o.url
+            audio.play()
+            document.title = o.title
+            playing = true
+            changeIcon(playing)
+            playlistItems[playingIndex].classList.add('active')
+            audio.addEventListener('ended', function(event) {
+                next(index + 1)
+            })
+        }
+
+        var setVolume = function(event) {
+
+            //获取元素左上角相对于视口的矩形
+            const rect = volumeSetting.getBoundingClientRect()
+
+            //必须获取真实宽度
+            var w = document.defaultView.getComputedStyle(volume).width
+
+            const vol = (event.clientX - rect.left) / parseInt(w)
+            volume.style.width = vol * 100 + '%'
+            audio.volume = vol
+            toggleStatus(volume)
+        }
+        var changeIcon = function(playing) {
+            if (!playing) {
+                playBtn.innerHTML = '<i class="fa fa-play"></i>'
+            } else {
+                playBtn.innerHTML = '<i class="fa fa-pause"></i>'
+            }
+        }
+        var changeState = function(playing) {
+            if (playing) {
+                audio.pause()
+            } else {
+                audio.play()
+            }
+        }
+        var search = function(name) {
+            var arr = playlist.map(function(v, k) {
+                if (v.title.includes(name)) {
+                    return index
+                }
+            });
+            !arr[0] && alert('没找到所要查找的歌曲')
+            play(arr[0] || 0)
+        }
+        var active = function() {
+            if (target.tagName.toLowerCase() == 'span') {
+                target.parentNode.style.color = 'white'
+            }
+            if (target.tagName.toLowerCase() == 'li') {
+                target.style.color = 'white'
+            }
+        }
+
+        var setPlayMode = function(mode) {
+            if (mode == 'circle') {
+
+            } else if (mode == 'single') {
+
+            } else if (mode == 'random') {
+
+            }
+        }
+        var next = function(index) {
+            play(index + 1)
+        }
+
+        var clearAll = function() {
+            musicItem.innerHTML = ''
+        }
     </script>
 </body>
 
