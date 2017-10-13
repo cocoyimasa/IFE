@@ -24,3 +24,11 @@ Baidu IFE2017 &amp;&amp; do it for fun
 * [task-infinite-scroll](http://cocoyimasa.github.io/IFE/task-infinite-scroll/index.html)
 
 * [task-tree](http://cocoyimasa.github.io/IFE/task-tree/index.html)
+
+* [task-loading](http://cocoyimasa.github.io/IFE/task-loading/index.html)
+
+* [task-music-player](http://cocoyimasa.github.io/IFE/task-music-player/index.html)
+
+* [task-mk-parser](http://cocoyimasa.github.io/IFE/task-mk-parser/index.html)
+
+* [task-slideshow3d](http://cocoyimasa.github.io/IFE/task-slideshow3d/index.html)
