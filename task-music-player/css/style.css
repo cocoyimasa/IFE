@@ -1,0 +1,274 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: transparent;
+    min-height: 500px;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 0.7;
+    background: #333029;
+    font-size: 12px;
+}
+
+.main {
+    margin: 20px auto 0;
+    width: 894px;
+}
+
+.playlist {
+    float: left;
+    width: 638px;
+}
+
+.playlist ul {
+    height: 317px;
+    overflow: scroll;
+}
+
+.album {
+    float: right;
+    width: 208px;
+}
+
+.main::after {
+    content: " ";
+    clear: both;
+    display: block;
+    height: 0;
+}
+
+.playlist>div::after {
+    content: " ";
+    clear: both;
+    display: block;
+    height: 0;
+}
+
+.playing {
+    float: left;
+}
+
+.clear-all {
+    float: right;
+}
+
+.playlist li {
+    list-style: none;
+    height: 50px;
+    line-height: 50px;
+    border-top: 1px solid #47443d;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.star {
+    width: 5%;
+    display: inline-block;
+}
+
+.song-title {
+    width: 45%;
+    display: inline-block;
+}
+
+.singer {
+    width: 35%;
+    display: inline-block;
+}
+
+.cover {
+    margin: 0 auto;
+    width: 150px;
+    text-align: center;
+}
+
+.artist-name {
+    font-size: 18px;
+    text-align: center;
+    margin: 0 auto;
+    width: 150px;
+    overflow: hidden;
+}
+
+.lyric {
+    margin: 0 auto;
+    width: 150px;
+    text-align: center;
+}
+
+.progress-wrapper {
+    height: 18px;
+    position: relative;
+}
+
+.progress {
+    height: 4px;
+    background-color: #191E22;
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    width: 545px;
+}
+
+.played {
+    background-color: #908979;
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 4px;
+}
+
+.circle {
+    font-size: 16px;
+    position: absolute;
+    color: white;
+    top: 0;
+    left: 0;
+    margin-top: -9px;
+    z-index: 10;
+}
+
+.player {
+    margin: 60px auto 0;
+    width: 894px;
+}
+
+.song-info {
+    float: left;
+    width: 638px;
+}
+
+.player-controls {
+    float: right;
+    width: 208px;
+}
+
+.player .wrapper {
+    float: left;
+    width: 545px;
+}
+
+.head {
+    overflow: hidden;
+    _zoom: 1;
+    margin-bottom: 10px;
+}
+
+.song {
+    float: left;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.left-time {
+    float: right;
+}
+
+.player-setting {
+    float: right;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    height: 50px;
+    position: relative;
+}
+
+.play-mode {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.volume-setting {
+    display: inline-block;
+}
+
+.volume {
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    top: 23px;
+    left: 45px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.button {
+    outline: none;
+    border: 0;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.fast-backward {
+    font-size: 16px;
+    margin-right: 40px;
+    color: white;
+}
+
+.play-button {
+    margin-right: 35px;
+    font-size: 26px;
+    color: white;
+}
+
+.fast-forward {
+    font-size: 16px;
+    color: white;
+}
+
+.controls {
+    width: 150px;
+    margin: 0 auto;
+}
+
+#music-list li>span {
+    display: inline-block;
+}
+
+.search-bar {
+    margin: 30px auto 0;
+    width: 894px;
+    height: 80px;
+}
+
+.search-wrapper {
+    margin: 0 auto;
+    width: 682px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.search-box {
+    text-indent: 1em;
+    font-size: 16px;
+    vertical-align: top;
+    outline: 0;
+    border: 0;
+    color: hsla(0, 0%, 88%, .8);
+    width: 622px;
+    height: 50px;
+    background: hsla(0, 0%, 100%, .07);
+}
+
+.search-btn {
+    background: hsla(0, 0%, 100%, .07);
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+}
+
+.active {
+    color: white;
+}
